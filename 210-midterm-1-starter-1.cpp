@@ -101,57 +101,57 @@ public:// public so it can be accessed outside the class
                 cout << "Position doesn't exist." << endl;
                 return;
             }
-            else
+            else // if not at the end, move to the next node
                 temp = temp->next;
         }
-        if (!temp) {
+        if (!temp) {// checking again to see is the pos exists
             cout << "Position doesn't exist." << endl;
             return;
         }
     
-        if (!temp->next) {
-            pop_back();
+        if (!temp->next) {// checking to see if the node is the last one
+            pop_back();// if so, delete the last node by popback
             return;
         }
     
-        Node* tempPrev = temp->prev;
-        tempPrev->next = temp->next;
-        temp->next->prev = tempPrev;
-        delete temp;
+        Node* tempPrev = temp->prev;// gets the node before the one we want to delete
+        tempPrev->next = temp->next;// the previous node's next pointer skips the node deleting
+        temp->next->prev = tempPrev;// the next nodes' previous pointer skips the node deleting
+        delete temp;//deleting the temp to free the memory
     }
 
-    void push_back(int v) {
-        Node* newNode = new Node(v);
-        if (!tail)
-            head = tail = newNode;
-        else {
-            tail->next = newNode;
-            newNode->prev = tail;
-            tail = newNode;
+    void push_back(int v) {// method that adds a new node with value v to the endof the list
+        Node* newNode = new Node(v);// creates a new Node on the heap with the value v
+        if (!tail)// checking if the list is empty
+            head = tail = newNode;// if so new node becomes both head and tail
+        else {// list not empty
+            tail->next = newNode;// the current tail's next pointer is set to the new node
+            newNode->prev = tail;// the new node's prev pointer is set the the previous node 
+            tail = newNode;// tail pointer updated
         }
     }
     
-    void push_front(int v) {
-        Node* newNode = new Node(v);
-        if (!head)
-            head = tail = newNode;
-        else {
-            newNode->next = head;
-            head->prev = newNode;
-            head = newNode;
+    void push_front(int v) { // method that adds a new node with value v to the front of the list
+        Node* newNode = new Node(v);// creates a new Node on the heap with the value v
+        if (!head)// checking if the list is empty
+            head = tail = newNode;// if so new node becomes both head and tail
+        else {// list not empty
+            newNode->next = head;// the new node's next pointer is set the the current head 
+            head->prev = newNode;// the current head's prev pointer is set to the new node
+            head = newNode;// the list's head pointer is updated to be the new node
         }
     }
     
-    void pop_front() {
+    void pop_front() {//method removes the first node from the list
 
-        if (!head) {
+        if (!head) {// checking if the list is empty
             cout << "List is empty." << endl;
             return;
         }
 
-        Node * temp = head;
+        Node * temp = head;//creating a temp pointer which starts at the head
 
-        if (head->next) {
+        if (head->next) {// checking is there is more than one node
             head = head->next;
             head->prev = nullptr;
         }
