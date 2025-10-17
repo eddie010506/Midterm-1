@@ -1,14 +1,18 @@
-#include <iostream>
-using namespace std;
+#include <iostream> // including iostream library
+using namespace std;// using namespace to simplify the code
 
-const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
-
+const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20; // declaring constants to set max and min values
+//making the class of doublylinkedlist
 class DoublyLinkedList {
+//private means they can only be accessed by the class's own method
 private:
+//defining a structure named node
     struct Node {
         int data;
+        //pointer for previous and next node on the list
         Node* prev;
         Node* next;
+        //constructor for the new node
         Node(int val, Node* p = nullptr, Node* n = nullptr) {
             data = val; 
             prev = p;
@@ -16,35 +20,38 @@ private:
         }
     };
 
-    Node* head;
-    Node* tail;
+    Node* head;// pointer that will always point to the first node
+    Node* tail;// pointer that will always point to the last node
 
-public:
-    DoublyLinkedList() { head = nullptr; tail = nullptr; }
-
+public:// public so it can be accessed outside the class
+    DoublyLinkedList() { head = nullptr; tail = nullptr; }//constructor for DoublyLinkedList class, classed when a new list is made
+// this insert after inserts a new node with given values
     void insert_after(int value, int position) {
+        //checking if the position is not negative
         if (position < 0) {
             cout << "Position must be >= 0." << endl;
             return;
         }
-
+        //creating a new node on the heap with specific values
         Node* newNode = new Node(value);
+        //checking if the list is empty, if the list is empty the new node becomes both head and tail
         if (!head) {
             head = tail = newNode;
             return;
         }
-
+        //creating a temporary pointer temp and setting on the start of the list
         Node* temp = head;
+        //looping to move the temp pointer position times to find the node after which the user insert the new node
         for (int i = 0; i < position && temp; ++i)
             temp = temp->next;
-
+        //checking if the pointer is out of bounds
         if (!temp) {
             cout << "Position exceeds list size. Node not inserted.\n";
-            delete newNode;
+            delete newNode; //deleting a newnode to prevent memory leak
             return;
         }
 
-        newNode->next = temp->next;
+        newNode->next = temp->next; // set the next pointer of the new node to point to what the current node's next was
         newNode->prev = temp;
         if (temp->next)
             temp->next->prev = newNode;
