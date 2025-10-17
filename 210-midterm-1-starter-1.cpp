@@ -218,12 +218,43 @@ public:// public so it can be accessed outside the class
             cout << "List is empty." << endl;
             return;
         }
+        // loop continues as long as current is not pointing to nullptr
+        while (current) {
+            // prints the data of the current node
+            cout << current->data << " ";
+            // checks if the current node has at least two more nodes after it
+            if (current->next && current->next->next) {
+                // if so, skip the next node by jumping two nodes ahead
+                current = current->next->next;
+            } 
+            // if there isn't a node two steps ahead
+            else {
+                // it means the pointer is  at or near the end of the list, so set current to nullptr to exit the loop
+                current = nullptr;
+            }
+        }
+        // printing the new line character for visuality
+        cout << endl;
     }
 };
 
 int main() {
     cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
+    DoublyLinkedList myList;//making a instanse of the class
+    //adding several elements to the end of the list 
+    myList.push_back(1);
+    myList.push_back(2);
+    myList.push_back(3);
+    myList.push_back(4);
+    myList.push_back(5);
+    myList.push_back(6);
+    //printing out the original list
+    cout << "Original list: ";
+    myList.print();
 
-    
+    //printing the method every other element to compare
+    cout << "Every other element: ";
+    myList.every_other_element();
+    //if everything goes well exit
     return 0;
 }
