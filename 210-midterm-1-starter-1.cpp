@@ -152,61 +152,72 @@ public:// public so it can be accessed outside the class
         Node * temp = head;//creating a temp pointer which starts at the head
 
         if (head->next) {// checking is there is more than one node
-            head = head->next;
-            head->prev = nullptr;
+            head = head->next; // head pointer moved to the next one
+            head->prev = nullptr;// new node prev pointer set to null
         }
-        else
+        else// if there was only one node, list is empty so head and tail is null
             head = tail = nullptr;
-        delete temp;
+        delete temp;// freeing up the memory
     }
 
-    void pop_back() {
-        if (!tail) {
+    void pop_back() {//method removes the last node from the list
+        if (!tail) {// checking if the list is empty
             cout << "List is empty." << endl;
             return;
         }
-        Node * temp = tail;
+        Node * temp = tail;//creating a temp pointer which starts at the tail
 
         if (tail->prev) {
-            tail = tail->prev;
-            tail->next = nullptr;
+            tail = tail->prev;// tail pointer moved to the prev one
+            tail->next = nullptr;// new node next pointer set to null because it is the last one now
         }
-        else
+        else// the list has only one node, list is empty so head and tail is null
             head = tail = nullptr;
-        delete temp;
+        delete temp;// freeing up the memory
     }
-
+    //destructor of the class, automatically called when object goes out of scope
     ~DoublyLinkedList() {
-        while (head) {
-            Node* temp = head;
-            head = head->next;
-            delete temp;
+        while (head) {// loop continues while the list is not empty
+            Node* temp = head;// creates a temporary pointer to the current head
+            head = head->next;//moving the head pointer to the next node
+            delete temp; //freeing the memory
         }
     }
-    void print() {
-        Node* current = head;
-        if (!current) {
-            cout << "List is empty." << endl;
+    void print() {//method prints all the elements of the list from head to tail
+        Node* current = head; //creating a pointer starting at the head
+        if (!current) {// checking if the list is empty
+            cout << "List is empty." << endl;// if so print a message and exit
             return;
         }
-        while (current) {
-            cout << current->data << " ";
-            current = current->next;
+        while (current) {// loop continues while the current is not at null
+            cout << current->data << " ";// printing data of the current one
+            current = current->next;// moving the pointer to the next node
         }
         cout << endl;
     }
 
-    void print_reverse() {
-        Node* current = tail;
-        if (!current) { 
+    void print_reverse() {//method prints all the elements of the list from tail to head so reverse
+        Node* current = tail;//creating a pointer starting at the tail
+        if (!current) { // checking if the list is empty
+            cout << "List is empty." << endl;// if so print a message and exit
+            return;
+        }
+        while (current) {// loop continues while the current is not at null
+            cout << current->data << " ";// printing data of the current one
+            current = current->prev;// moving the pointer to the prev node
+        }
+        cout << endl;
+    }
+    //method to print every other element
+    void every_other_element(){
+        // creates a pointer current to go through the list, starting at the head
+        Node* current = head;
+        // checks if the list is empty
+        if (!current) {
+            // if so print a message and exit
             cout << "List is empty." << endl;
             return;
         }
-        while (current) {
-            cout << current->data << " ";
-            current = current->prev;
-        }
-        cout << endl;
     }
 };
 
